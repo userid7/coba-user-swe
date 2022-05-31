@@ -30,7 +30,7 @@ exports.signin = (req, res) => {
           message: "Invalid Password!",
         });
       }
-      var tokenDuration = 60 * 5;
+      var tokenDuration = 60 * 30;
       var token = jwt.sign({ id: user.id }, config.secret, {
         expiresIn: tokenDuration, // 24 hours
       });

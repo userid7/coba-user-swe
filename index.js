@@ -1,5 +1,4 @@
 //index.js
-
 const express = require("express");
 const cors = require("cors");
 const app = express();
@@ -31,6 +30,7 @@ app.get("/", (req, res) => {
 
 require("./route/user.route")(app);
 require("./route/auth.route")(app);
+require("./route/userJson.route")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

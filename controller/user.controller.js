@@ -23,8 +23,15 @@ exports.create = (req, res) => {
 
 // Retrieve all Users from the database.
 exports.findAll = (req, res) => {
-  const name = req.query.name;
-  var condition = name ? { name: { [Op.like]: `%${name}%` } } : null;
+  const keyword = req.query.keyword;
+  var condition = keyword
+    ? {
+        [Op.or]: [
+          { name: { [Op.like]: `%${keyword}%` } },
+          { email: { [Op.like]: `%${keyword}%` } },
+        ],
+      }
+    : null;
   User.findAll({ where: condition })
     .then((data) => {
       res.send({ status: "OK", message: "", data: data });
@@ -65,13 +72,13 @@ exports.update = (req, res) => {
         res.send({
           status: "OK",
           message: "User was updated successfully.",
-          data: body,
+          data: id,
         });
       } else {
         res.send({
           status: "ERROR",
-          message: "User was updated successfully.",
-          data: body,
+          message: "Nothing was updated.",
+          data: id,
         });
       }
     })
